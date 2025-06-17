@@ -15,8 +15,8 @@ module.exports = async (req, res) => {
     const fileName = Date.now() + '-' + file.originalFilename.replace(/\s+/g, '-');
 
     const GITHUB_TOKEN = process.env.GITHUB_TOKEN; // simpan di Vercel env
-    const USERNAME = 'SeptianXcz';
-    const REPO = 'image-uploader';
+    const USERNAME = 'Carlotta-gf';
+    const REPO = 'baymaxcloud';
     const FILE_PATH = `public/${fileName}`;
 
     try {
