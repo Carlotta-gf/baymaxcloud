@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Upload to BaymaxCloud</title>
+</head>
+<body>
+  <h2>Upload File (max 25MB)</h2>
+  <form id="uploadForm">
+    <input type="file" name="file" id="fileInput" required />
+    <button type="submit">Upload</button>
+  </form>
+  <p id="result"></p>
+
+  <script>
+    const form = document.getElementById('uploadForm');
+    const result = document.getElementById('result');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const file = document.getElementById('fileInput').files[0];
+      if (file.size > 25 * 1024 * 1024) {
+        result.textContent = '❌ File terlalu besar (maks 25MB)';
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        result.innerHTML = `✅ <a href="${data.url}" target="_blank">${data.url}</a>`;
+      } else {
+        result.textContent = '❌ Gagal upload: ' + (data.error?.message || 'Unknown error');
+      }
+    });
+  </script>
+</body>
+</html>
